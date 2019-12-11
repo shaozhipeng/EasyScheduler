@@ -127,6 +127,7 @@ public class HadoopUtils implements Closeable {
                             }
 
                             if (fs == null) {
+                                logger.warn("fs: " + fs + " hdfsUser: " + hdfsUser);
                                 if(StringUtils.isNotEmpty(hdfsUser)){
                                     //UserGroupInformation ugi = UserGroupInformation.createProxyUser(hdfsUser,UserGroupInformation.getLoginUser());
                                     UserGroupInformation ugi = UserGroupInformation.createRemoteUser(hdfsUser);
@@ -134,6 +135,7 @@ public class HadoopUtils implements Closeable {
                                         @Override
                                         public Boolean run() throws Exception {
                                             fs = FileSystem.get(configuration);
+                                            logger.warn("doAs fs: " + fs);
                                             return true;
                                         }
                                     });
@@ -155,7 +157,7 @@ public class HadoopUtils implements Closeable {
                         String appAddress = getString(Constants.YARN_APPLICATION_STATUS_ADDRESS);
                         if (!StringUtils.isEmpty(rmHaIds)) {
                             appAddress = getAppAddress(appAddress, rmHaIds);
-                            logger.info("appAddress : {}", appAddress);
+                            logger.warn("appAddress : {}", appAddress);
                         }
                         configuration.set(Constants.YARN_APPLICATION_STATUS_ADDRESS, appAddress);
                     } catch (Exception e) {
