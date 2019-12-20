@@ -45,9 +45,11 @@ public class ZookeeperMonitor extends AbstractZKClient{
 		List<MasterServer> masterServers = new ArrayList<>();
 		Map<String, String> masterMap = getServerList(isMaster);
 		String parentPath = isMaster ? getMasterZNodeParentPath() : getWorkerZNodeParentPath();
+		int i = 0;
 		for(String path : masterMap.keySet()){
 			MasterServer masterServer = ResInfo.parseHeartbeatForZKInfo(masterMap.get(path));
 			masterServer.setZkDirectory( parentPath + "/"+ path);
+			masterServer.setId(i++);
 			masterServers.add(masterServer);
 		}
 		return masterServers;
@@ -75,14 +77,14 @@ public class ZookeeperMonitor extends AbstractZKClient{
 
 		if(StringUtils.isNotBlank(zookeeperServers)){
 			String[] zookeeperServersArray = zookeeperServers.split(",");
-			
+
 			for (String zookeeperServer : zookeeperServersArray) {
 				ZooKeeperState state = new ZooKeeperState(zookeeperServer);
 				boolean ok = state.ruok();
 				if(ok){
 					state.getZookeeperInfo();
 				}
-				
+
 				String hostName = zookeeperServer;
 				int connections = state.getConnections();
 				int watches = state.getWatches();
