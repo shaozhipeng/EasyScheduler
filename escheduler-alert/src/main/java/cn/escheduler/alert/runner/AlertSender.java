@@ -113,7 +113,7 @@ public class AlertSender{
                 alertDao.updateAlert(AlertStatus.EXECUTION_SUCCESS, "execution success", alert.getId());
                 logger.info("alert send success");
                 try {
-                    String token = EnterpriseWeChatUtils.getToken();
+//                    String token = EnterpriseWeChatUtils.getToken();
                     // 2019-12-31 注释掉WeChat通知
 //                    weChatManager.send(alert,token);
                 } catch (Exception e) {
