@@ -114,7 +114,8 @@ public class AlertSender{
                 logger.info("alert send success");
                 try {
                     String token = EnterpriseWeChatUtils.getToken();
-                    weChatManager.send(alert,token);
+                    // 2019-12-31 注释掉WeChat通知
+//                    weChatManager.send(alert,token);
                 } catch (Exception e) {
                     logger.error(e.getMessage(),e);
                 }
